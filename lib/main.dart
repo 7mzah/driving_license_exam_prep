@@ -1,10 +1,13 @@
-import 'package:driving_license_exam_prep/shared_preferences/login_data.dart';
-import 'package:driving_license_exam_prep/sign_in_page.dart';
-import 'package:driving_license_exam_prep/sign_up_page.dart';
-import 'package:driving_license_exam_prep/theme/dark_theme.dart';
-import 'package:driving_license_exam_prep/theme/light_theme.dart';
+import 'package:driving_license_exam_prep/presentation/theme/dark_theme.dart';
+import 'package:driving_license_exam_prep/presentation/theme/light_theme.dart';
+import 'package:driving_license_exam_prep/data/repositories/login_data.dart';
+import 'package:driving_license_exam_prep/presentation/pages/sign_in_page.dart';
+import 'package:driving_license_exam_prep/presentation/pages/sign_up_page.dart';
+
 import 'package:flutter/material.dart';
-import 'User_pages/dashboard.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'business_logic/blocs/progressBar/progress_bloc.dart';
+import 'presentation/pages/User_pages/roadMap.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Ensure initialization
@@ -23,7 +26,9 @@ class MyApp extends StatelessWidget {
       theme: lightTheme,
       darkTheme: darkTheme,
       home: loginData?.isLoggedIn == true
-          ? const Dashboard() // Navigate to dashboard if logged in
+          ? BlocProvider<ProgressBloc>(
+              create: (_) => ProgressBloc(), child: const Dashboard())
+          // Navigate to dashboard if logged in
           : const SignInPage(), // Navigate to sign-in page if not logged in
       routes: {
         SignInPage.id: (context) => const SignInPage(),
