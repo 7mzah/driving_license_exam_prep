@@ -1,8 +1,8 @@
-import 'package:driving_license_exam_prep/shared_preferences/login_data.dart';
+import 'package:driving_license_exam_prep/data/repositories/login_data.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'services/auth_service.dart'; // Import your AuthService
-import 'package:driving_license_exam_prep/User_pages/dashboard.dart';
+import '../../data/data_providers/auth_service.dart'; // Import your AuthService
+import 'User_pages/roadMap.dart';
 import 'sign_up_page.dart';
 
 class SignInPage extends StatefulWidget {

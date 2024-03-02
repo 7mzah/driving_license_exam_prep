@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'services/auth_service.dart';
-import 'User_pages/dashboard.dart';
+import '../../data/data_providers/auth_service.dart';
+import 'User_pages/roadMap.dart';
 import 'sign_in_page.dart';
 import 'package:email_validator/email_validator.dart';
 
