@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 //accent #7E8254
 ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
-
+  useMaterial3: true,
   textTheme: const TextTheme(
     displayLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
     displayMedium: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
