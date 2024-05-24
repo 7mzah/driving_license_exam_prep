@@ -1,12 +1,14 @@
 // lib/presentation/widgets/Practice_Tests/theoreticalExam.dart
 import 'package:driving_license_exam_prep/business_logic/providers/difficulty_level_provider.dart';
+import 'package:driving_license_exam_prep/data/data_providers/fetch_theo_questions.dart';
 import 'package:driving_license_exam_prep/presentation/widgets/TestStructure/questionscreen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../business_logic/blocs/practiceTests/theo_test_bloc.dart';
 import '../../../business_logic/blocs/practiceTests/theo_test_state.dart';
 import '../../../business_logic/cubits/exam_cubit.dart';
-import '../TestStructure/stats_page.dart';
+import '../TestFeatures/stats_page.dart';
 import 'package:provider/provider.dart';
 
 class TheoreticalExam extends StatelessWidget {
@@ -49,6 +51,10 @@ class TheoreticalExam extends StatelessWidget {
                               final examStats =
                                   await examCubit.getExamStats(exam.id);
                               if (examStats.isNotEmpty) {
+                                Provider.of<DifficultyLevelNotifier>(context,
+                                    listen: false)
+                                    .updateDifficultyLevel(
+                                    exam.difficultyLevel);
                                 print('Navigating to StatsPage');
                                 // Set correctAnswers and totalQuestions in ExamCubit here
                                 examCubit.setCorrectAnswers(
@@ -61,18 +67,25 @@ class TheoreticalExam extends StatelessWidget {
                                     totalQuestions: examCubit.totalQuestions,
                                     examId: exam.id,
                                     isFromQuestionScreen: false,
+                                    isRoadSignExam: false,
                                   ),
                                 ));
                               } else {
                                 Provider.of<DifficultyLevelNotifier>(context,
                                         listen: false)
-                                    .updateDifficultyLevel(exam.difficultyLevel);
-                                print('Navigating to QuestionScreen');
+                                    .updateDifficultyLevel(
+                                        exam.difficultyLevel);
+                                if (kDebugMode) {
+                                  print('Navigating to QuestionScreen');
+                                }
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) => QuestionScreen(
                                       difficultyLevel: exam.difficultyLevel,
                                       examId: exam.id,
+                                      fetchQuestions: fetchTheoQuestions,
+                                      hasImages: false,
+                                      isRoadSignExam: false,
                                     ),
                                   ),
                                 );

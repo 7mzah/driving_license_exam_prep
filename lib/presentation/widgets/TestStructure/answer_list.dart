@@ -15,7 +15,7 @@ class AnswersList extends StatefulWidget {
     required this.selectedChoiceId,
     required this.onAnswerSelected,
     required this.hasAnswered,
-    required this.showCorrectAnswer,
+    this.showCorrectAnswer = false,
   });
 
   @override

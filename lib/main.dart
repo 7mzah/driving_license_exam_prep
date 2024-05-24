@@ -5,6 +5,7 @@ import 'package:driving_license_exam_prep/presentation/theme/light_theme.dart';
 import 'package:driving_license_exam_prep/data/repositories/login_data.dart';
 import 'package:driving_license_exam_prep/presentation/pages/sign_in_page.dart';
 import 'package:driving_license_exam_prep/presentation/pages/sign_up_page.dart';
+import 'package:driving_license_exam_prep/splashscreen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,9 +39,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         theme: lightTheme,
         darkTheme: darkTheme,
-        home: loginData?.isLoggedIn == true
-            ? const Dashboard()
-            : const SignInPage(),
+        home: SplashScreen(loginData: loginData), // Set SplashScreen as the home
         routes: {
           SignInPage.id: (context) => const SignInPage(),
           SignUpPage.id: (context) => const SignUpPage(),

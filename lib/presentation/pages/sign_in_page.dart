@@ -32,8 +32,8 @@ class SignInPageState extends State<SignInPage> {
             expandedHeight: 200,
             flexibleSpace: FlexibleSpaceBar(
               title: Text(
-                "Driving Academy",
-                style: Theme.of(context).textTheme.displayLarge,
+                "Lebanese RoadMaster",
+                style: Theme.of(context).textTheme.displayMedium,
               ),
             ),
           ),

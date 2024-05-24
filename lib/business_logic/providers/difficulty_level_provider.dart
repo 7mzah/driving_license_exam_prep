@@ -11,7 +11,9 @@ class DifficultyLevelNotifier with ChangeNotifier {
   void updateDifficultyLevel(String newDifficultyLevel) async {
     _lastDifficultyLevel = _difficultyLevel;
     _difficultyLevel = newDifficultyLevel;
-    print('Updated difficultyLevel: $_difficultyLevel');
+    if (kDebugMode) {
+      print('Updated difficultyLevel: $_difficultyLevel');
+    }
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('difficultyLevel', _difficultyLevel);
     notifyListeners();

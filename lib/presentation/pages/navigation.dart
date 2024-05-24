@@ -17,7 +17,6 @@ class DashboardState extends State<Dashboard> {
   int currentPageIndex = 0;
 
   final List<Widget> _pages = const <Widget>[
-    RoadMap(),
     PracticeTestPage(),
     SettingsPage(),
   ];
@@ -30,11 +29,7 @@ class DashboardState extends State<Dashboard> {
             setState(() => currentPageIndex = index),
         selectedIndex: currentPageIndex,
         destinations: const <Widget>[
-          NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
-          ),
+
           NavigationDestination(
             selectedIcon: Icon(Icons.fact_check),
             icon: Icon(Icons.fact_check_outlined),

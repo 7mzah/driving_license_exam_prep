@@ -1,23 +1,29 @@
+import 'package:driving_license_exam_prep/presentation/widgets/TestFeatures/review_screen.dart';
 import 'package:driving_license_exam_prep/presentation/widgets/TestStructure/questionscreen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../business_logic/cubits/exam_cubit.dart';
+import '../../../data/data_providers/fetch_road_questions.dart';
+import '../../../data/data_providers/fetch_theo_questions.dart';
 
 class StatsPage extends StatelessWidget {
   final int correctAnswers;
   final int totalQuestions;
   final int examId;
   final bool isFromQuestionScreen;
+  final bool isRoadSignExam;
 
   const StatsPage(
       {super.key,
       required this.correctAnswers,
       required this.totalQuestions,
-      required this.examId,
-      required this.isFromQuestionScreen});
+       this.examId =0,
+       this.isFromQuestionScreen = false,
+       this.isRoadSignExam = false});
 
   @override
   Widget build(BuildContext context) {
@@ -97,8 +103,15 @@ class StatsPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
-                      onPressed: () {
-                        Navigator.pop(context);
+                      onPressed: () async {
+                        var questionMaps = await examCubit.getExamQuestions(examId);
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ReviewScreen(questionMaps: questionMaps, examId: examId,),
+                          ),
+                        );
                       },
                       child: const Text('Review'),
                     ),
@@ -120,6 +133,7 @@ class StatsPage extends StatelessWidget {
 
                       onPressed: () async {
                         examCubit.deleteExamStats(examId);
+                        examCubit.deleteExamQuestionsAndAnswers(examId);
                         SharedPreferences prefs =
                             await SharedPreferences.getInstance();
                         String difficultyLevel =
@@ -133,6 +147,10 @@ class StatsPage extends StatelessWidget {
                             return QuestionScreen(
                               difficultyLevel: difficultyLevel,
                               examId: examId,
+                              fetchQuestions: isRoadSignExam
+                                  ? fetchRoadQuestions
+                                  : fetchTheoQuestions,
+                              hasImages: isRoadSignExam,
                             );
                           },
                         ));
